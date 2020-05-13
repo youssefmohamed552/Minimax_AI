@@ -74,7 +74,7 @@ export(
 
 
 configure_file(
-  minimax_ai-config.cmake
+  config_file/minimax_ai-config.cmake
   "${CMAKE_CURRENT_BINARY_DIR}/MinimaxAI/minimax_ai-config.cmake"
   COPYONLY
 )
