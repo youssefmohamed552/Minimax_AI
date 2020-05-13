@@ -1,0 +1,14 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/action.hpp
+
+/Users/youssefhussein/programming/cplusplus/ai/minimax_ai/src/action.cpp
+action.hpp
+/Users/youssefhussein/programming/cplusplus/ai/minimax_ai/src/action.hpp
+

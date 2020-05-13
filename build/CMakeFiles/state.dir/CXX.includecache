@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/action.hpp
+
+../include/state.hpp
+vector
+-
+unordered_set
+-
+action.hpp
+../include/action.hpp
+
+/Users/youssefhussein/programming/cplusplus/ai/minimax_ai/src/state.cpp
+state.hpp
+/Users/youssefhussein/programming/cplusplus/ai/minimax_ai/src/state.hpp
+

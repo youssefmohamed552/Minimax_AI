@@ -1,0 +1,42 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/action.hpp
+
+../include/game.hpp
+unordered_set
+-
+state.hpp
+../include/state.hpp
+
+../include/player.hpp
+unordered_set
+-
+game.hpp
+../include/game.hpp
+
+../include/state.hpp
+vector
+-
+unordered_set
+-
+action.hpp
+../include/action.hpp
+
+/Users/youssefhussein/programming/cplusplus/ai/minimax_ai/src/player.cpp
+iostream
+-
+time.h
+-
+stdlib.h
+-
+stdio.h
+-
+player.hpp
+/Users/youssefhussein/programming/cplusplus/ai/minimax_ai/src/player.hpp
+
