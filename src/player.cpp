@@ -30,10 +30,9 @@ Player::
  */
 
 HumanPlayer::
-HumanPlayer(Game* game)
+HumanPlayer()
 {
   // std::cout << "Human Player Created !!\n";
-  m_game = game;
   m_order = count + 1;
   // std::cout << "order : " << m_order << "\n";
   count++;
@@ -52,9 +51,13 @@ HumanPlayer::
 
 GameState
 HumanPlayer::
-move(){
+move(State* state){
   // std::cout << "Human Player " << m_order << "  Move\n";
-  return m_game->make_human_move(m_order);
+  if(!state->human_act(m_order)){
+    std::cerr << "Human player couldn't make a move!!\n";
+    exit(EXIT_FAILURE);
+  }
+  return (state->status() == S_TERMINAL)? S_DONE : S_GOING;
 }
 
 
@@ -76,10 +79,9 @@ ComputerPlayer::
  */
 
 RandomPlayer::
-RandomPlayer(Game* game)
+RandomPlayer()
 {
   // std::cout << "Random Player Created!!\n";
-  m_game = game;
 }
 
 RandomPlayer::
@@ -90,11 +92,15 @@ RandomPlayer::
 
 GameState
 RandomPlayer::
-move(){
-  std::vector<Action*> act_set = m_game->action_set(m_order);
+move(State* state){
+  std::vector<Action*> act_set = state->action_set(m_order);
   int random_move = 0;
   if(act_set.size() > 1) random_move = get_random_number(act_set.size());
-  GameState result =  m_game->make_move(*act_set[random_move]);
+  if(state->act(*act_set[random_move], m_order)){
+    std::cerr << "Random Player couldn't act on the state!!\n";
+    exit(EXIT_FAILURE);
+  }
+  GameState result = (state->status() == S_TERMINAL)? S_DONE : S_GOING;
   for(int i = 0; i < act_set.size(); i++) delete act_set[i];
   return result;
 }
@@ -114,9 +120,8 @@ get_random_number(int bound){
  */
 
 MiniMaxPlayer::
-MiniMaxPlayer(Game* game){
+MiniMaxPlayer(){
   // std::cout << "MiniMax Player Created!!\n";
-  m_game = game;
   m_order = count + 1;
   m_depth = -1;
   count++;
@@ -129,9 +134,9 @@ MiniMaxPlayer::
 
 GameState
 MiniMaxPlayer::
-move(){
-  StateNode root(m_game->current_state(), m_order);
-  std::vector<Action*> act_set = root.state()->action_set(m_order);
+move(State* state){
+  StateNode root(state , m_order);
+  std::vector<Action*> act_set = state->action_set(m_order);
   std::pair<int,int> max_val = {INT_MIN, INT_MAX};
   Action* best_action;
   // std::cout << "outcomes: \n";
@@ -151,7 +156,11 @@ move(){
   std::cout << StateNode::count << " states explored"<< std::endl;;
   if(best_action == NULL)
     return S_FAILED;
-  return m_game->make_move(*best_action);
+  if(!state->act(*best_action, m_order)){
+    std::cerr << "Minimax Player couldn't make a move!!\n";
+    exit(EXIT_FAILURE);
+  }
+  return (state->status() == S_TERMINAL)? S_DONE : S_GOING;
 }
 
 std::pair<int,int>
@@ -191,8 +200,7 @@ eval(StateNode root, bool is_maximize, int depth){
  */
 
 H_MiniMaxPlayer::
-H_MiniMaxPlayer(Game* game ,int depth){
-  m_game = game;
+H_MiniMaxPlayer(int depth){
   m_depth = depth;
 }
 

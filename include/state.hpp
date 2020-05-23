@@ -22,6 +22,7 @@ class State{
     virtual ~State();
     virtual void display() const = 0;
     virtual bool act(const Action& a, int p) = 0;
+    virtual bool human_act(int p) = 0;
     virtual void compute_utility(int player_order) = 0;
     virtual int compute_huristic(int player_order) = 0;
     virtual std::vector<Action*> action_set(int player_order) const = 0;

@@ -8,20 +8,20 @@
 
 class Player{
   protected:
-    Game* m_game;
     int m_order;
     // std::unordered_set<Action*> m_actions;
   public:
     static int count;
     virtual ~Player();
-    virtual GameState move() = 0;
+    virtual GameState move(State* state) = 0;
+    int order() const { return m_order;}
 };
 
 class HumanPlayer : public Player {
   public:
-    HumanPlayer(Game* game);
+    HumanPlayer();
     virtual ~HumanPlayer();
-    virtual GameState move();
+    virtual GameState move(State* state) override;
 };
 
 class ComputerPlayer : public Player {
@@ -32,9 +32,9 @@ class ComputerPlayer : public Player {
 
 class RandomPlayer : public ComputerPlayer {
   public:
-    RandomPlayer(Game* game);
+    RandomPlayer();
     virtual ~RandomPlayer();
-    virtual GameState move();
+    virtual GameState move(State* state) override;
     int get_random_number(int bound);
 };
 
@@ -42,16 +42,15 @@ class MiniMaxPlayer : public ComputerPlayer {
   protected:
     int m_depth;
   public:
-    MiniMaxPlayer(){}
-    MiniMaxPlayer(Game* game);
+    MiniMaxPlayer();
     virtual ~MiniMaxPlayer();
-    virtual GameState move();
+    virtual GameState move(State* state) override;
     virtual std::pair<int,int> eval(StateNode root, bool is_maximize, int depth);
 };
 
 class H_MiniMaxPlayer : public MiniMaxPlayer {
   public:
-    H_MiniMaxPlayer(Game* game, int depth);
+    H_MiniMaxPlayer(int depth);
     virtual ~H_MiniMaxPlayer();
 };
 
